@@ -1,0 +1,63 @@
+[gd_scene load_steps=3 format=3 uid="uid://csv3uon6jo81n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ce44q"]
+size = Vector2(5, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0laqu"]
+size = Vector2(4, 4)
+
+[node name="Main" type="Node2D"]
+
+[node name="Paddle Left" type="Area2D" parent="."]
+position = Vector2(5, 90)
+
+[node name="ColorRect" type="ColorRect" parent="Paddle Left"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -16.0
+offset_right = 5.0
+offset_bottom = 16.0
+grow_vertical = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle Left"]
+position = Vector2(2.5, 0)
+shape = SubResource("RectangleShape2D_ce44q")
+
+[node name="Paddle Right" type="Area2D" parent="."]
+position = Vector2(315, 90)
+
+[node name="ColorRect" type="ColorRect" parent="Paddle Right"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -16.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle Right"]
+position = Vector2(-2.5, 0)
+shape = SubResource("RectangleShape2D_ce44q")
+
+[node name="Ball" type="CharacterBody2D" parent="."]
+position = Vector2(160, 90)
+
+[node name="ColorRect" type="ColorRect" parent="Ball"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("RectangleShape2D_0laqu")
