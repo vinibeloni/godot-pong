@@ -1,4 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://csv3uon6jo81n"]
+[gd_scene load_steps=8 format=3 uid="uid://csv3uon6jo81n"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_a013f"]
+[ext_resource type="Script" path="res://ball.gd" id="1_dmrsb"]
+[ext_resource type="Script" path="res://paddle.gd" id="2_j2c30"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ce44q"]
 size = Vector2(5, 32)
@@ -6,10 +10,19 @@ size = Vector2(5, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0laqu"]
 size = Vector2(4, 4)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jjx8b"]
+size = Vector2(320, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5pi4s"]
+size = Vector2(6, 196)
+
 [node name="Main" type="Node2D"]
+script = ExtResource("1_a013f")
 
 [node name="Paddle Left" type="Area2D" parent="."]
 position = Vector2(5, 90)
+collision_layer = 4
+script = ExtResource("2_j2c30")
 
 [node name="ColorRect" type="ColorRect" parent="Paddle Left"]
 anchors_preset = 4
@@ -26,6 +39,8 @@ shape = SubResource("RectangleShape2D_ce44q")
 
 [node name="Paddle Right" type="Area2D" parent="."]
 position = Vector2(315, 90)
+collision_layer = 4
+script = ExtResource("2_j2c30")
 
 [node name="ColorRect" type="ColorRect" parent="Paddle Right"]
 anchors_preset = 6
@@ -45,6 +60,8 @@ shape = SubResource("RectangleShape2D_ce44q")
 
 [node name="Ball" type="CharacterBody2D" parent="."]
 position = Vector2(160, 90)
+collision_mask = 7
+script = ExtResource("1_dmrsb")
 
 [node name="ColorRect" type="ColorRect" parent="Ball"]
 anchors_preset = 8
@@ -61,3 +78,47 @@ grow_vertical = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
 shape = SubResource("RectangleShape2D_0laqu")
+
+[node name="Borders" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="Top" type="CollisionShape2D" parent="Borders"]
+position = Vector2(160, -4)
+shape = SubResource("RectangleShape2D_jjx8b")
+
+[node name="Bottom" type="CollisionShape2D" parent="Borders"]
+position = Vector2(160, 184)
+shape = SubResource("RectangleShape2D_jjx8b")
+
+[node name="Left" type="Area2D" parent="."]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Left"]
+position = Vector2(-3, 90)
+shape = SubResource("RectangleShape2D_5pi4s")
+
+[node name="Right" type="Area2D" parent="."]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right"]
+position = Vector2(323, 90)
+shape = SubResource("RectangleShape2D_5pi4s")
+
+[node name="Score Left" type="Label" parent="."]
+offset_left = 120.0
+offset_right = 160.0
+offset_bottom = 23.0
+text = "0"
+
+[node name="Score Right" type="Label" parent="."]
+offset_left = 160.0
+offset_right = 200.0
+offset_bottom = 23.0
+text = "0"
+horizontal_alignment = 2
+
+[connection signal="body_entered" from="Paddle Left" to="." method="_on_paddle_left_body_entered"]
+[connection signal="body_entered" from="Paddle Right" to="." method="_on_paddle_right_body_entered"]
+[connection signal="body_entered" from="Borders" to="." method="_on_borders_body_entered"]
+[connection signal="body_entered" from="Left" to="." method="_on_left_body_entered"]
+[connection signal="body_entered" from="Right" to="." method="_on_right_body_entered"]
